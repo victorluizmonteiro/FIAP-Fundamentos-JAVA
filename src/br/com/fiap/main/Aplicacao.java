@@ -1,4 +1,4 @@
-package br.com.fiapmain;
+package br.com.fiap.main;
 
 import java.time.LocalDate;
 import java.util.Arrays;
