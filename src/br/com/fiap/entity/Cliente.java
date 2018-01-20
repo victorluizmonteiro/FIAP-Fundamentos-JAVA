@@ -90,6 +90,7 @@ public void setTipoCartao(Cartao tipoCartao) {
 public void reaizarPagamento(List<Item>itens,Cartao cartao) throws PaymentException {
 	Double valores = itens.stream().mapToDouble(valorItens -> valorItens.getValor()).sum();
 	
+	
 	if(isCreditCard(cartao)) {
 		cartao.setFatura(valores);
 	}else {
@@ -105,6 +106,9 @@ public void reaizarPagamento(List<Item>itens,Cartao cartao) throws PaymentExcept
 	
 		return cartao.getTipoCartao().equals(TipoCartao.CREDITO) ? true : false;
 		}
+	
+	
+	
 	
 
 }

@@ -1,6 +1,8 @@
 package br.com.fiap.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class NotaFiscal {
@@ -43,7 +45,20 @@ public class NotaFiscal {
 		this.cliente = cliente;
 	}
 	
-	
+	public void gerarNotaFiscal() {
+		
+		System.out.println("========== LOJA DO POVO ==========");
+		System.out.println("Data : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY")));
+		System.out.println("\n[DADOS DO CLIENTE]");
+		System.out.println("\nNome : " + this.cliente.getNome() + "\nEmail : " + this.cliente.getEmail() + "\nCPF : "+ this.cliente.getCpf());
+		System.out.println("\n========== Produtos  comprados ========== ");
+	 	itens.stream().forEach(u -> {
+			System.out.println( "Código do Produto : " + u.getId() + "\nDescrição : " + u.getDescricao() + "\nValor : " + u.getValor());
+		
+		});
+	 
+		
+	}
 	
 
 }
