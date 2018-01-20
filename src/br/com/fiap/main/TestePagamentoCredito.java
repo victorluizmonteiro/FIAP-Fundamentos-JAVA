@@ -1,5 +1,6 @@
 package br.com.fiap.main;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -14,7 +15,10 @@ import br.com.fiap.exception.PaymentException;
 
 public class TestePagamentoCredito {
 
-	public static void main(String[] args) throws PaymentException {
+	public static void main(String[] args) throws PaymentException, IOException {
+	
+
+		
 		LocalDate dataNascimento = LocalDate.of(1987, 2, 20);
 		
 		Cartao cartao = new Cartao(TipoCartao.CREDITO);
@@ -26,14 +30,15 @@ public class TestePagamentoCredito {
 		
 		List<Item>itens = Arrays.asList(item1,item2,item3);
 		
-		System.out.println(cartao.getFatura());
-		cliente.reaizarPagamento(itens, cartao);
+		
+		cliente.realizarPagamento(itens, cartao);
 		
 		
 		
 		NotaFiscal notaFiscal = new NotaFiscal(1, itens, LocalDateTime.now(), cliente);
 		
-		notaFiscal.gerarNotaFiscal();
+		notaFiscal.gerarNotaFiscal(cartao);
+		
 		System.out.println("Total gasto : " + cartao.getFatura());
 	}
 

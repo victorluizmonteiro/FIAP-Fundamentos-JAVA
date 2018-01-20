@@ -13,7 +13,7 @@ public class Cliente {
 	private String email;
 	private LocalDate dataNascimento;
 	private ContaCorrente contaCorrente;
-	private Cartao tipoCartao;
+	private Cartao cartao;
 	
 	
 	
@@ -24,7 +24,7 @@ public class Cliente {
 	
 
 	public Cliente(Integer id, String nome, String cpf, String email, LocalDate dataNascimento,
-			ContaCorrente contaCorrente, Cartao tipoCartao) {
+			ContaCorrente contaCorrente, Cartao cartao) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -32,7 +32,7 @@ public class Cliente {
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.contaCorrente = contaCorrente;
-		this.tipoCartao = tipoCartao;
+		this.cartao = cartao;
 	}
 
 
@@ -77,17 +77,17 @@ public class Cliente {
 	
 
 
-public Cartao getTipoCartao() {
-		return tipoCartao;
+public Cartao getCartao() {
+		return cartao;
 	}
 
 
 
-public void setTipoCartao(Cartao tipoCartao) {
-		this.tipoCartao = tipoCartao;
+public void setTipoCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 
-public void reaizarPagamento(List<Item>itens,Cartao cartao) throws PaymentException {
+public void realizarPagamento(List<Item>itens,Cartao cartao) throws PaymentException {
 	Double valores = itens.stream().mapToDouble(valorItens -> valorItens.getValor()).sum();
 	
 	
@@ -97,8 +97,11 @@ public void reaizarPagamento(List<Item>itens,Cartao cartao) throws PaymentExcept
 		if(this.contaCorrente.getSaldo() < valores) {
 			throw new PaymentException("Saldo insuficiente");
 		}
+		
 		this.contaCorrente.setSaldo(this.contaCorrente.getSaldo() - valores);
+		
 	}
+	System.out.println("Pagamento realizado com sucesso !");
 	
 }
 

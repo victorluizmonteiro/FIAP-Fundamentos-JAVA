@@ -34,6 +34,11 @@ public class Item {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
+	@Override
+	public String toString() {
+		
+		return "\nCódigo do prouto : " + this.id + "\nDecrição : " + this.descricao + "\nValor : " + 
+		this.valor +"\n";
+	}
 	
 }

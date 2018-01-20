@@ -1,5 +1,7 @@
 package br.com.fiap.entity;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +12,8 @@ public class NotaFiscal {
 	private List<Item>itens;
 	private LocalDateTime dataNotaFiscal;
 	private Cliente cliente;
+	
+	
 	public NotaFiscal(Integer id, List<Item> itens, LocalDateTime dataNotaFiscal, Cliente cliente) {
 		super();
 		this.id = id;
@@ -45,20 +49,70 @@ public class NotaFiscal {
 		this.cliente = cliente;
 	}
 	
-	public void gerarNotaFiscal() {
+	public void gerarNotaFiscal(Cartao cartao) throws IOException {
+		  String   LOJA = "========== LOJA DO POVO ==========";
+		  String  DATA = "Data : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY"));
+		  String  LABEL_CLIENTE = "\n[DADOS DO CLIENTE]";
+		  String  FORMA_PAGAMENTO = "\nForma de Pagamento : " + cliente.getCartao().getTipoCartao().name();
+		  String  DADOS_CLIENTE = "\nNome : " + cliente.getNome() + "\nCPF : " + cliente.getCpf() + "\nEmail : "+ cliente.getEmail();
+		  String DESCRICAO_PRODUTOS = "\n========== Produtos Comprados ==========";
+		Runnable r1 = new Runnable() {
+			
+			@Override
+			public void run() {
+				System.out.println(LOJA);
+				System.out.println(DATA);
+				System.out.println(LABEL_CLIENTE);
+				System.out.println(DADOS_CLIENTE);
+				System.out.println(FORMA_PAGAMENTO);
+				System.out.println(DESCRICAO_PRODUTOS);
+			 	itens.stream().forEach(System.out::println);
+				
+			}
+		};
 		
-		System.out.println("========== LOJA DO POVO ==========");
-		System.out.println("Data : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY")));
-		System.out.println("\n[DADOS DO CLIENTE]");
-		System.out.println("\nNome : " + this.cliente.getNome() + "\nEmail : " + this.cliente.getEmail() + "\nCPF : "+ this.cliente.getCpf());
-		System.out.println("\n========== Produtos  comprados ========== ");
-	 	itens.stream().forEach(u -> {
-			System.out.println( "Código do Produto : " + u.getId() + "\nDescrição : " + u.getDescricao() + "\nValor : " + u.getValor());
+	 	Runnable r2 = new Runnable() {
+		 	String path = cartao.getTipoCartao().equals(TipoCartao.CREDITO) ? "arquivos/notaFiscalCredito.txt" : "arquivos/NotaFiscalDebito.txt" ;
+
+			@Override
+			public void run() {
+				FileWriter file;
+				try {
+					file = new FileWriter(path);
+					file.write(LOJA);
+					file.write(DATA);
+					file.write(LABEL_CLIENTE);	
+					file.write(DADOS_CLIENTE);
+					file.write(FORMA_PAGAMENTO);
+					file.write(DESCRICAO_PRODUTOS);
+					itens.forEach(u -> {
+						try {
+							file.write(u.toString());
+							
+						} catch (IOException e) {
+							
+							e.printStackTrace();
+						}
+					});
+					System.out.println("Nota fiscal gerada !, conferir em sua pasta arquivos !");
+					file.flush();
+					file.close();
+				 
+				} catch (IOException e1) {
+					
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		};
+		new Thread(r1).start();
+		new Thread(r2).start();
 		
-		});
-	 
+	 	
+	 	
+	 	
 		
 	}
-	
 
 }
