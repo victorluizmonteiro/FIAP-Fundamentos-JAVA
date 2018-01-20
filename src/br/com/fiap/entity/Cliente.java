@@ -89,16 +89,17 @@ public void setTipoCartao(Cartao cartao) {
 
 public void realizarPagamento(List<Item>itens,Cartao cartao) throws PaymentException {
 	Double valores = itens.stream().mapToDouble(valorItens -> valorItens.getValor()).sum();
-	
-	
+	Double desconto = 0.05;
+	Double valorComDesconto = valores - (valores*desconto);
 	if(isCreditCard(cartao)) {
 		cartao.setFatura(valores);
 	}else {
 		if(this.contaCorrente.getSaldo() < valores) {
 			throw new PaymentException("Saldo insuficiente");
 		}
-		
-		this.contaCorrente.setSaldo(this.contaCorrente.getSaldo() - valores);
+		System.out.println("Você ganhou 5% de desconto em sua compra ! ");
+		System.out.println("Valor pago : " + valorComDesconto);
+		this.contaCorrente.setSaldo(this.contaCorrente.getSaldo() - valorComDesconto);
 		
 	}
 	System.out.println("Pagamento realizado com sucesso !");

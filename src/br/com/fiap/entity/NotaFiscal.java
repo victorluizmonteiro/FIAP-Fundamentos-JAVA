@@ -49,36 +49,30 @@ public class NotaFiscal {
 		this.cliente = cliente;
 	}
 	
-	public void gerarNotaFiscal(Cartao cartao) throws IOException {
+	public void gerarNotaFiscal(Cartao cartao) throws IOException, InterruptedException {
 		  String   LOJA = "========== LOJA DO POVO ==========";
-		  String  DATA = "Data : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY"));
+		  String  DATA = "\nData : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY"));
 		  String  LABEL_CLIENTE = "\n[DADOS DO CLIENTE]";
 		  String  FORMA_PAGAMENTO = "\nForma de Pagamento : " + cliente.getCartao().getTipoCartao().name();
 		  String  DADOS_CLIENTE = "\nNome : " + cliente.getNome() + "\nCPF : " + cliente.getCpf() + "\nEmail : "+ cliente.getEmail();
 		  String DESCRICAO_PRODUTOS = "\n========== Produtos Comprados ==========";
-		Runnable r1 = new Runnable() {
-			
-			@Override
-			public void run() {
-				System.out.println(LOJA);
+			System.out.println(LOJA);
 				System.out.println(DATA);
 				System.out.println(LABEL_CLIENTE);
 				System.out.println(DADOS_CLIENTE);
 				System.out.println(FORMA_PAGAMENTO);
 				System.out.println(DESCRICAO_PRODUTOS);
 			 	itens.stream().forEach(System.out::println);
-				
-			}
-		};
-		
+			
 	 	Runnable r2 = new Runnable() {
-		 	String path = cartao.getTipoCartao().equals(TipoCartao.CREDITO) ? "arquivos/notaFiscalCredito.txt" : "arquivos/NotaFiscalDebito.txt" ;
+		 	String path = cartao.getTipoCartao().equals(TipoCartao.CREDITO) ? "arquivos/NotaFiscalCredito.txt" : "arquivos/NotaFiscalDebito.txt" ;
 
 			@Override
 			public void run() {
 				FileWriter file;
 				try {
 					file = new FileWriter(path);
+					file.write("========== NOTA FISCAL  ==========\n");
 					file.write(LOJA);
 					file.write(DATA);
 					file.write(LABEL_CLIENTE);	
@@ -94,6 +88,7 @@ public class NotaFiscal {
 							e.printStackTrace();
 						}
 					});
+					file.write("Total gasto : " + getTotalProutos());
 					System.out.println("Nota fiscal gerada !, conferir em sua pasta arquivos !");
 					file.flush();
 					file.close();
@@ -106,13 +101,17 @@ public class NotaFiscal {
 				
 			}
 		};
-		new Thread(r1).start();
+		
 		new Thread(r2).start();
 		
 	 	
 	 	
 	 	
 		
+	}
+	
+	private Double getTotalProutos() {
+		return itens.stream().mapToDouble(u -> u.getValor()).sum();
 	}
 
 }

@@ -2,7 +2,7 @@ package br.com.fiap.entity;
 
 public class ContaCorrente {
 	
-	private Double saldo;
+	private Double saldo = 4000.0;
 	
 	
 	public Double getSaldo() {

@@ -16,8 +16,8 @@ import br.com.fiap.exception.PaymentException;
 
 public class TestePagamentoDebito {
 
-	public static void main(String[] args) throws PaymentException, IOException {
-		ContaCorrente contaCorrente = new ContaCorrente(1000.0);
+	public static void main(String[] args) throws PaymentException, IOException, InterruptedException {
+		ContaCorrente contaCorrente = new ContaCorrente();
 		Cartao cartao = new Cartao(TipoCartao.DEBITO);
 		LocalDate dataNascimento = LocalDate.of(1987, 2, 20);
 		Cliente cliente = new Cliente(1,"Victor","48474810892","victor.monteiro@gmail.com",dataNascimento,contaCorrente,cartao);

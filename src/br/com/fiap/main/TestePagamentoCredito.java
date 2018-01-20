@@ -15,7 +15,7 @@ import br.com.fiap.exception.PaymentException;
 
 public class TestePagamentoCredito {
 
-	public static void main(String[] args) throws PaymentException, IOException {
+	public static void main(String[] args) throws PaymentException, IOException, InterruptedException {
 	
 
 		
