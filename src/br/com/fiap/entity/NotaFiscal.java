@@ -54,7 +54,7 @@ public class NotaFiscal {
 		  String  DATA = "\nData : " + LocalDate.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY"));
 		  String  LABEL_CLIENTE = "\n[DADOS DO CLIENTE]";
 		  String  FORMA_PAGAMENTO = "\nForma de Pagamento : " + cliente.getCartao().getTipoCartao().name();
-		  String  DADOS_CLIENTE = "\nNome : " + cliente.getNome() + "\nCPF : " + cliente.getCpf() + "\nEmail : "+ cliente.getEmail();
+		  String  DADOS_CLIENTE = "\nNome : " + cliente.getNome() + "\nData de Nascimento : "+ cliente.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\nCPF : " + cliente.getCpf() + "\nEmail : "+ cliente.getEmail();
 		  String DESCRICAO_PRODUTOS = "\n========== Produtos Comprados ==========";
 			System.out.println(LOJA);
 				System.out.println(DATA);

@@ -3,6 +3,7 @@ package br.com.fiap.main;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TestePagamentoCredito {
 	
 
 		
-		LocalDate dataNascimento = LocalDate.of(1987, 2, 20);
+		LocalDate dataNascimento = LocalDate.of(1997, Month.JUNE, 1);
 		
 		Cartao cartao = new Cartao(TipoCartao.CREDITO);
 		Cliente cliente = new Cliente(1,"Marcos","48474410896","marcos@gmail.com",dataNascimento,null,cartao);
